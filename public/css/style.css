@@ -1,0 +1,48 @@
+body { 
+    background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+.card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; }
+.card:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+
+
+.chart-wrapper { position: relative; height: 50vh; width: 100%;    
+
+}
+
+.algo-option {
+    background: white; border: 1px solid #dee2e6; border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; transition: all 0.2s;
+}
+
+.algo-option:hover { 
+    background-color: #f8f9fa; border-color: #adb5bd; 
+}
+
+.form-check-input { 
+    margin-right: 12px; transform: scale(1.2); cursor: pointer;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 6px;
+    padding: 10px;
+}
+
+.number-box {
+    height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; font-weight: bold; font-size: 14px;
+    background-color: #e9ecef; color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.number-box.active { 
+    background-color: #ffc107 !important; color: #000; transform: scale(1.1); z-index: 5; box-shadow: 0 0 8px #ffc107;
+ }
+
+.number-box.composite { background-color: #dc3545 !important; color: rgba(255,255,255,0.6); transform: scale(0.9); 
+}
+
+.number-box.prime { background-color: #198754 !important; color: #fff; transform: scale(1.05); box-shadow: 0 0 5px #198754; z-index: 2; 
+}
