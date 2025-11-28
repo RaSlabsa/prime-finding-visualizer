@@ -1,0 +1,6 @@
+@PrimeVisualizer_HostAddress = http://localhost:5195
+
+GET {{PrimeVisualizer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

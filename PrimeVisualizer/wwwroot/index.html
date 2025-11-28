@@ -46,11 +46,11 @@
                         
                         <label class="form-label">Діапазон пошуку (N)</label>
                         <div class="input-group mb-3">
-                            <input class="form-control", type="number", min="1000", max="100000000", value="50000", id="inputRange">
+                            <input class="form-control", type="number", min="1000", max="100000000", value="10000", id="inputRange">
                         </div>
 
                         <button class="btn btn-primary w-100 mb-1", id="startRace">Розпочати</button>
-                        <button class="btn btn-light text-muted w-100">Скинути результат</button>
+                        <button class="btn btn-light text-muted w-100", id="ResetResult">Скинути результат</button>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <div class="card h-100">
 
                     <div class="card-header">
-                        <h5>cat title</h5>
+                        <h5>Результат порівняння в мілісекундах.</h5>
                     </div>
 
                     <div class="card-body">
@@ -78,7 +78,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
 
     <script src="./client.js"></script>
 </html>
