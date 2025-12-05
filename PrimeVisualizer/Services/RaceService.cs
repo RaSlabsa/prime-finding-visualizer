@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using PrimeVisualizer.Hubs;
 using PrimeVisualizer.Services.Algorithms;
+using System.Diagnostics;
 
 namespace PrimeVisualizer.Services
 {
@@ -34,21 +35,32 @@ namespace PrimeVisualizer.Services
                     });
                 });
 
-                var task = algorithm.Calculate(limit, progress, token).ContinueWith(async t =>
+                var task = Task.Run(async () =>
                 {
-                    if (t.IsCanceled || token.IsCancellationRequested)
+                    var stopWatch = Stopwatch.StartNew();
+
+                    try
+                    {
+                        await algorithm.Calculate(limit, progress, token);
+                    }
+                    catch (OperationCanceledException)
                     {
                         return;
                     }
 
-                    await _hubContext.Clients.All.SendAsync("AlgorithmFinished",
-                        new
-                        {
-                            algorithm = algorithm.Name
+                    stopWatch.Stop();
 
-                        });
-                });
-
+                    if (!token.IsCancellationRequested)
+                    {
+                        await _hubContext.Clients.All.SendAsync("AlgorithmFinished",
+                            new
+                            {
+                                algorithm = algorithm.Name,
+                                timeTaken = stopWatch.Elapsed.TotalMilliseconds
+                            });
+                    }
+                },token);
+                
                 tasks.Add(task);
             }
 

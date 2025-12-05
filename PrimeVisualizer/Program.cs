@@ -28,6 +28,7 @@ namespace PrimeVisualizer
             builder.Services.AddScoped<IPrimeAlgorithm, EratosthenesSieve>();
             builder.Services.AddScoped<IPrimeAlgorithm, TrialDivisionOptimized>();
             builder.Services.AddScoped<IPrimeAlgorithm, TrialDivision>();
+            builder.Services.AddScoped<IPrimeAlgorithm, TrialDivisionWithPrecomputedPrimes>();
 
             builder.Services.AddScoped<RaceService>();
 

@@ -77,7 +77,7 @@ async function startRace(){
 
     latestData = new Array(selectedAlgorithms.length).fill(0)
 
-    chartInstance.data.labels = selectedAlgorithms.map(a => a.label)
+    chartInstance.data.labels = selectedAlgorithms.map(a => [a.label , ''])
     chartInstance.data.datasets[0].backgroundColor = selectedAlgorithms.map(a => a.color)
     chartInstance.data.datasets[0].data = latestData
     chartInstance.update()
@@ -127,7 +127,19 @@ function resetResult(){
     finishedCount = 0
 
     chartInstance.data.datasets[0].data = latestData
+
+    chartInstance.data.labels = chartInstance.data.labels.map(label => {
+        if (Array.isArray(label)){
+            label[1] = ''
+            return label
+        }
+
+        return label
+    })
+
     chartInstance.update()
+
+    
 
     document.getElementById('startRace').disabled = false
 }
@@ -218,7 +230,7 @@ function initChart(){
     })
 }
 
-function stopRaceLoop() {
+function stopRaceLoop(){
     if (renderInterval) {
         clearInterval(renderInterval)
         renderInterval = null
@@ -256,7 +268,19 @@ connection.on('ReceiveProgress', (data) => {
 })
 
 connection.on('AlgorithmFinished', (data) => {
+    const chartIndex = chartInstance.data.labels.findIndex(label => {
+        if (Array.isArray(label)){
+            return label[0] == data.algorithm
+        }
+
+        return label == data.algorithm
+    })
+
     const index = selectedAlgorithms.findIndex(a => a.label === data.algorithm)
+
+    let timeTaken = data.timeTaken
+    let timeTakenText
+    
     if (index !== -1) {
         latestData[index] = 100
         finishedCount++
@@ -264,8 +288,21 @@ connection.on('AlgorithmFinished', (data) => {
         if (finishedCount >= selectedAlgorithms.length) {
             stopRaceLoop()
         }
+
+        if (timeTaken > 1000){
+            timeTakenText = `${(timeTaken / 1000).toFixed(3)} sec`
+        }else{
+            timeTakenText = `${timeTaken.toFixed(3)} ms`
+        }
+
+        chartInstance.data.labels[chartIndex] = [data.algorithm, timeTakenText]
+        chartInstance.update()
     }
 })
+
+function findCharIndex(){
+    
+}
 
 // --- INIT PROGRAM ---
 

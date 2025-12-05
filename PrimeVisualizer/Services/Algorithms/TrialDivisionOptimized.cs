@@ -1,5 +1,4 @@
-﻿using Microsoft.OpenApi.MicrosoftExtensions;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace PrimeVisualizer.Services.Algorithms
 {
